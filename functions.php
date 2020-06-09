@@ -1,25 +1,21 @@
 <?php
 
-$articles = array(
-    array(
-        'title' => 'Vivamus euismod a tellus eget interdum. Aenean ac.',
-        'content' => 'Aliquam vulputate mi in vulputate aliquam. Mauris ultrices vel felis eget tempus. Morbi a est at lacus malesuada ultrices ac quis turpis. Curabitur ante metus, malesuada eget neque eu, ornare suscipit ligula. Aliquam suscipit cursus eros, ut tincidunt nulla laoreet a. Donec aliquam urna vel pellentesque sodales.',
-        'image' => 'img.jpg'
-    ),
-    array(
-        'title' => 'Vivamus euismod a tellus eget interdum. Aenean ac.',
-        'content' => 'Aliquam vulputate mi in vulputate aliquam. Mauris ultrices vel felis eget tempus. Morbi a est at lacus malesuada ultrices ac quis turpis. Curabitur ante metus, malesuada eget neque eu, ornare suscipit ligula. Aliquam suscipit cursus eros, ut tincidunt nulla laoreet a. Donec aliquam urna vel pellentesque sodales.',
-        'image' => 'img.jpg'
-    ),
-    array(
-        'title' => 'Vivamus euismod a tellus eget interdum. Aenean ac.',
-        'content' => 'Aliquam vulputate mi in vulputate aliquam. Mauris ultrices vel felis eget tempus. Morbi a est at lacus malesuada ultrices ac quis turpis. Curabitur ante metus, malesuada eget neque eu, ornare suscipit ligula. Aliquam suscipit cursus eros, ut tincidunt nulla laoreet a. Donec aliquam urna vel pellentesque sodales.',
-        'image' => 'img.jpg'
-    )
-);
-
 function getArticles() {
-    global $articles;
+    $articles = array();
+
+    $count = countLines('titles');
+
+    $titles = getLines('titles', 1, $count);
+    $contents = getLines('contents', 1, $count);
+    $images = getLines('images', 1, $count);
+
+    for ($i=0; $i < $count; $i++) {
+        $articles[] = array(
+            'title' => $titles[$i],
+            'content' => $contents[$i],
+            'image' => $images[$i]
+        );
+    }
 
     return $articles;
 }
@@ -48,4 +44,46 @@ function createArticle($article) {
     } else {
         return 'An error ocurred';
     }
+}
+
+function countLines($filename) {
+    $count = 0;
+    $handle = fopen("data/$filename", "r");
+
+    while(!feof($handle)){
+        $line = fgets($handle);
+        $count++;
+    }
+
+    fclose($handle);
+
+    return $count;
+}
+
+function getLine($filename, $line) {
+    $data = getLines($filename, $line, $line);
+
+    if ($data != null) {
+        return $data;
+    } else {
+        return null;
+    }
+}
+
+function getLines($filename, $start, $end) {
+    $data = null;
+    $count = 1;
+    $handle = fopen("data/$filename", "r");
+
+    while($count <= $end && !feof($handle)) {
+        if ($count >= $start && $count <= $end) {
+            $data[] = fgets($handle);
+        }
+
+        $count++;
+    }
+
+    fclose($handle);
+
+    return $data;
 }
