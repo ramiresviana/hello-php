@@ -7,7 +7,7 @@ $result = null;
 if ($_POST) {
     $title = $_POST['title'];
     $content = $_POST['content'];
-    $image = $_POST['image'];
+    $image = $_FILES['image'];
 
     $article = array(
         'title' => $title,
@@ -36,7 +36,7 @@ if ($_POST) {
         <h1>Hello HTML</h1>
     </header>
     <main>
-        <form method="POST">
+        <form enctype="multipart/form-data" method="POST">
             <label>Title</label>
             <input name="title" />
             <label>Content</label>

@@ -44,6 +44,7 @@ function createArticle($article) {
     $hasImage = $image != '';
 
     $hasError = !($hasTitle && $hasContent && $hasImage);
+    $hasError = !uploadImage($image);
 
     if ($hasError) {
         return 'An error ocurred';
@@ -97,4 +98,24 @@ function getLines($filename, $start, $end) {
     fclose($handle);
 
     return $data;
+}
+
+function uploadImage($image) {
+    $allowed_ext = array('png', 'jpg');
+
+    $basename = basename($image['name']);
+    $parts = explode('.', $basename);
+    $extension_part = count($parts)-1;
+    $extension = $parts[$extension_part];
+
+    if (!in_array($extension, $allowed_ext)) {
+        return false;
+    }
+
+    $filename = countLines('images') + 1 . ".$extension";
+    $destination = 'data/upload/' . $filename;
+
+    file_put_contents('data/images', PHP_EOL . $filename, FILE_APPEND);
+
+    return move_uploaded_file($image['tmp_name'], $destination);
 }

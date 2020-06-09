@@ -25,7 +25,7 @@ $articles = getArticles();
 <?php foreach($articles as $article): ?>
         <a href="#">
             <article>
-                <img src="<?= $article['image'] ?>">
+                <img src="/data/upload/<?= $article['image'] ?>">
                 <div>
                     <h2><?= $article['title'] ?></h2>
                     <p><?= $article['content'] ?></p>
