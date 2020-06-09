@@ -3,7 +3,7 @@
 function getArticles() {
     $articles = array();
 
-    $count = countLines('titles');
+    $count = countArticles();
 
     $titles = getLines('titles', 1, $count);
     $contents = getLines('contents', 1, $count);
@@ -24,6 +24,10 @@ function getArticle($id) {
     global $articles;
 
     return $articles[$id];
+}
+
+function countArticles() {
+    return countLines('titles');
 }
 
 function getHost() {
@@ -112,7 +116,7 @@ function uploadImage($image) {
         return false;
     }
 
-    $filename = countLines('images') + 1 . ".$extension";
+    $filename = countArticles() + 1 . ".$extension";
     $destination = 'data/upload/' . $filename;
 
     file_put_contents('data/images', PHP_EOL . $filename, FILE_APPEND);
