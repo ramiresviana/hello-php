@@ -2,11 +2,22 @@
 
 require('functions.php');
 
-if ($_POST) {
-    $host = getHost();
+$error = null;
 
-    header("Location: http://$host");
-    exit;
+if ($_POST) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    $authenticated = authenticate($username, $password);
+
+    if ($authenticated) {
+        $host = getHost();
+
+        header("Location: http://$host");
+        exit;
+    } else {
+        $error = 'Invalid credentials';
+    }
 }
 
 ?>
@@ -33,6 +44,7 @@ if ($_POST) {
             <label>Password</label>
             <input name="password" type="password" />
             <button>Submit</button>
+            <p><?= $error ?></p>
         </form>
     </main>
 </body>

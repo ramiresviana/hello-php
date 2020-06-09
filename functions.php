@@ -33,3 +33,7 @@ function getArticle($id) {
 function getHost() {
     return $_SERVER[HTTP_HOST];
 }
+
+function authenticate($username, $password) {
+    return $username == 'admin' && $password == 'admin';
+}
