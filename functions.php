@@ -37,3 +37,15 @@ function getHost() {
 function authenticate($username, $password) {
     return $username == 'admin' && $password == 'admin';
 }
+
+function createArticle($article) {
+    $hasTitle = $article['title'] != '';
+    $hasContent = $article['content'] != '';
+    $hasImage = $article['image'] != '';
+
+    if ($hasTitle && $hasContent && $hasImage) {
+        return 'Article created';
+    } else {
+        return 'An error ocurred';
+    }
+}
