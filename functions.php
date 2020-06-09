@@ -35,15 +35,26 @@ function authenticate($username, $password) {
 }
 
 function createArticle($article) {
-    $hasTitle = $article['title'] != '';
-    $hasContent = $article['content'] != '';
-    $hasImage = $article['image'] != '';
+    $title = $article['title'];
+    $content = $article['content'];
+    $image = $article['image'];
 
-    if ($hasTitle && $hasContent && $hasImage) {
-        return 'Article created';
-    } else {
+    $hasTitle = $title != '';
+    $hasContent = $content != '';
+    $hasImage = $image != '';
+
+    $hasError = !($hasTitle && $hasContent && $hasImage);
+
+    if ($hasError) {
         return 'An error ocurred';
     }
+
+    $content = str_replace("\r\n", "<br>", $content);
+
+    file_put_contents('data/titles', PHP_EOL . $title, FILE_APPEND);
+    file_put_contents('data/contents', PHP_EOL . $content, FILE_APPEND);
+
+    return 'Article created';
 }
 
 function countLines($filename) {
