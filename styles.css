@@ -1,0 +1,114 @@
+body {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: #eee;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+header {
+    padding: 48px 32px 32px;
+}
+
+main {
+    margin-bottom: 32px;
+    padding: 0 32px;
+}
+
+a {
+    color: black;
+}
+
+article {
+    display: inline-block;
+    margin-bottom: 32px;
+}
+
+article img {
+    height: 160px;
+    width: 240px;
+    margin-right: 16px;
+    float: left;
+    background: #ddd;
+}
+
+@media (max-width: 480px) {
+    article img {
+        width: 100%;
+        height: auto;
+    }
+}
+
+footer {
+    margin-bottom: 32px;
+    padding: 0 32px;
+}
+
+button {
+    padding: 16px 20px;
+    background: #2D88F2;
+    border: none;
+    color: white;
+}
+
+.full-img {
+    width: 100%;
+    height: 600px;
+    background: #ddd;
+}
+
+form {
+    padding: 64px 48px;
+    background: #ddd;
+}
+
+form label, form input, form textarea {
+    display: block;
+    font-size: 16px;
+}
+
+form label {
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+form input, form textarea {
+    width: 100%;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+    background: white;
+    border: none;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+form button {
+    width: 100%;
+    margin-top: 32px;
+    font-size: 16px;
+}
+
+.form-center {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.admin-actions {
+    margin-bottom: 16px;
+}
+
+.admin-actions hr {
+    margin: 48px 0 32px;
+}
+
+.admin-actions button {
+    display: inline-block;
+    margin-top: 8px;
+}
+
+.admin-actions .red {
+    background: #E45950;
+}
