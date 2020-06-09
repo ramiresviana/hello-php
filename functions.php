@@ -31,7 +31,7 @@ function getArticle($id) {
 }
 
 function getHost() {
-    return $_SERVER[HTTP_HOST];
+    return $_SERVER['HTTP_HOST'];
 }
 
 function authenticate($username, $password) {
