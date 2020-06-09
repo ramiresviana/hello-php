@@ -2,7 +2,17 @@
 
 require('functions.php');
 
-$article = getArticle(0);
+$host = getHost();
+
+if (!isset($_GET['id'])) {
+    redirect();
+}
+
+$article = getArticle($_GET['id']);
+
+if ($article == null) {
+    redirect();
+}
 
 ?>
 
@@ -22,7 +32,7 @@ $article = getArticle(0);
         <h1>Hello HTML</h1>
     </header>
     <main>
-        <img class="full-img" src="<?= $article['image'] ?>">
+        <img class="full-img" src="data/upload/<?= $article['image'] ?>">
         <h2><?= $article['title'] ?></h2>
         <p><?= $article['content'] ?></p>
     </main>

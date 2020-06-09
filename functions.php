@@ -21,9 +21,23 @@ function getArticles() {
 }
 
 function getArticle($id) {
-    global $articles;
+    $count = countArticles();
 
-    return $articles[$id];
+    if ($id == 0 || $id > $count) {
+        return null;
+    }
+
+    $title = getLine('titles', $id);
+    $content = getLine('contents', $id);
+    $image = getLine('images', $id);
+
+    $article = array(
+        'title' => $title,
+        'content' => $content,
+        'image' => $image
+    );
+
+    return $article;
 }
 
 function countArticles() {
@@ -80,7 +94,7 @@ function getLine($filename, $line) {
     $data = getLines($filename, $line, $line);
 
     if ($data != null) {
-        return $data;
+        return $data[0];
     } else {
         return null;
     }
@@ -122,4 +136,11 @@ function uploadImage($image) {
     file_put_contents('data/images', PHP_EOL . $filename, FILE_APPEND);
 
     return move_uploaded_file($image['tmp_name'], $destination);
+}
+
+function redirect($path = '') {
+    $host = getHost();
+
+    header("Location: http://$host/$path");
+    exit;
 }

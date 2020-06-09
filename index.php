@@ -22,8 +22,8 @@ $articles = getArticles();
         <h1>Hello HTML</h1>
     </header>
     <main>
-<?php foreach($articles as $article): ?>
-        <a href="#">
+<?php foreach($articles as $key => $article): ?>
+        <a href="/article.php?id=<?= $key + 1 ?>">
             <article>
                 <img src="/data/upload/<?= $article['image'] ?>">
                 <div>
