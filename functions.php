@@ -29,3 +29,7 @@ function getArticle($id) {
 
     return $articles[$id];
 }
+
+function getHost() {
+    return $_SERVER[HTTP_HOST];
+}
