@@ -101,13 +101,15 @@ function getLine($filename, $line) {
 }
 
 function getLines($filename, $start, $end) {
-    $data = null;
+    $result = array();
     $count = 1;
     $handle = fopen("data/$filename", "r");
 
     while($count <= $end && !feof($handle)) {
+        $data = fgets($handle);
+
         if ($count >= $start && $count <= $end) {
-            $data[] = fgets($handle);
+            $result[] = $data;
         }
 
         $count++;
@@ -115,7 +117,7 @@ function getLines($filename, $start, $end) {
 
     fclose($handle);
 
-    return $data;
+    return $result;
 }
 
 function uploadImage($image) {
