@@ -21,7 +21,7 @@ $articles = getArticles();
     <header>
         <h1>Hello HTML</h1>
 <?php if (isLogged()): ?>
-        Logged as admin <div class="admin-actions"><a href="#"><button class="red">Logout</button></a></div>
+        Logged as admin <div class="admin-actions"><a href="logout.php"><button class="red">Logout</button></a></div>
         There are <?= countArticles() ?> posts <div class="admin-actions"><a href="/new.php"><button>Add new</button></a></div>
 <?php endif ?>
     </header>

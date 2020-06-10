@@ -152,7 +152,7 @@ function login() {
 }
 
 function logout() {
-    $_SESSION['logged'] = false;
+    session_destroy();
 }
 
 function isLogged() {
