@@ -191,7 +191,7 @@ function logout() {
 }
 
 function isLogged() {
-    return $_SESSION['logged'] == true;
+    return isset($_SESSION['logged'] ) && $_SESSION['logged'] == true;
 }
 
 function updateLine($filename, $line, $newData) {
