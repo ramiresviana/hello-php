@@ -4,6 +4,10 @@ require('functions.php');
 
 $error = null;
 
+if (isLogged()) {
+    redirect();
+}
+
 if ($_POST) {
     $username = $_POST['username'];
     $password = $_POST['password'];
@@ -11,10 +15,7 @@ if ($_POST) {
     $authenticated = authenticate($username, $password);
 
     if ($authenticated) {
-        $host = getHost();
-
-        header("Location: http://$host");
-        exit;
+        redirect();
     } else {
         $error = 'Invalid credentials';
     }

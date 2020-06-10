@@ -146,3 +146,17 @@ function redirect($path = '') {
     header("Location: http://$host/$path");
     exit;
 }
+
+function login() {
+    $_SESSION['logged'] = true;
+}
+
+function logout() {
+    $_SESSION['logged'] = false;
+}
+
+function isLogged() {
+    return $_SESSION['logged'] == true;
+}
+
+session_start();
