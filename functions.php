@@ -59,9 +59,14 @@ function createArticle($article) {
 
     $hasTitle = $title != '';
     $hasContent = $content != '';
-    $hasImage = $image != '';
+    $hasImage = $image != null & !$image['error'];
 
     $hasError = !($hasTitle && $hasContent && $hasImage);
+
+    if ($hasError) {
+        return 'An error ocurred';
+    }
+
     $hasError = !uploadImage($image);
 
     if ($hasError) {
