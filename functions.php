@@ -30,20 +30,32 @@ function getArticle($id) {
 }
 
 // Returns an array with all articles
-function getArticles($limit = -1, $offset = 0) {
+function getArticles($limit = -1, $offset = 0, $desc = true) {
     $articles = array();
+
+    $articleCount = countArticles();
 
     // Returns all articles
     if ($limit < 1) {
-        $limit = countArticles();
+        $limit = $articleCount;
     }
 
-    // Number of lines
-    $start = $offset + 1;
-    $limit = $limit - 1;
+    if ($desc) {
+        $end = $articleCount - $offset;
+        $start = $end - $limit + 1;
 
-    // Ending on line
-    $end = $start + $limit;
+        // getLines wont work with negative values
+        if ($start <= 0) {
+            $start = 1;
+        }
+    } else {
+        // Number of lines
+        $start = $offset + 1;
+        $limit = $limit - 1;
+
+        // Ending on line
+        $end = $start + $limit;
+    }
 
     // Get data from files
     $titles = getLines('titles', $start, $end);
@@ -58,6 +70,10 @@ function getArticles($limit = -1, $offset = 0) {
             'content' => $contents[$i],
             'image' => $images[$i]
         );
+    }
+
+    if ($desc) {
+        $articles = array_reverse($articles);
     }
 
     return $articles;

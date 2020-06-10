@@ -49,7 +49,7 @@ $articles = getArticles($itemsPerPage, $offset);
             <article>
                 <img src="/data/upload/<?= $article['image'] ?>">
                 <div>
-                    <h2><?= $article['id'] ?></h2>
+                    <h2><?= $article['title'] ?></h2>
                     <p><?= $article['content'] ?></p>
                 </div>
             </article>
