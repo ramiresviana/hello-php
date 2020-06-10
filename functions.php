@@ -30,19 +30,30 @@ function getArticle($id) {
 }
 
 // Returns an array with all articles
-function getArticles() {
+function getArticles($limit = -1, $offset = 0) {
     $articles = array();
 
-    $count = countArticles();
+    // Returns all articles
+    if ($limit < 1) {
+        $limit = countArticles();
+    }
+
+    // Number of lines
+    $start = $offset + 1;
+    $limit = $limit - 1;
+
+    // Ending on line
+    $end = $start + $limit;
 
     // Get data from files
-    $titles = getLines('titles', 1, $count);
-    $contents = getLines('contents', 1, $count);
-    $images = getLines('images', 1, $count);
+    $titles = getLines('titles', $start, $end);
+    $contents = getLines('contents', $start, $end);
+    $images = getLines('images', $start, $end);
 
     // Creates array structure
-    for ($i=0; $i < $count; $i++) {
+    for ($i=0; $i < count($titles); $i++) {
         $articles[] = array(
+            'id' => $start + $i,
             'title' => $titles[$i],
             'content' => $contents[$i],
             'image' => $images[$i]
