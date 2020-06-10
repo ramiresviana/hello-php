@@ -32,6 +32,7 @@ if ($_POST) {
     );
 
     $result = updateArticle($id, $newData);
+    $article = getArticle($id);
 }
 
 ?>
