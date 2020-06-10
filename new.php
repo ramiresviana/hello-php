@@ -2,6 +2,10 @@
 
 require('functions.php');
 
+if (!isLogged()) {
+    redirect('login.php');
+}
+
 $result = null;
 
 if ($_POST) {
