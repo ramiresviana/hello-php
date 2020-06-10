@@ -2,10 +2,12 @@
 
 require('functions.php');
 
+// Checks authentication
 if (!isLogged()) {
     redirect('login.php');
 }
 
+// Checks get parameter
 if (!isset($_GET['id'])) {
     redirect();
 }
@@ -14,10 +16,12 @@ $id = $_GET['id'];
 
 $article = getArticle($id);
 
+// Checks for an valid article
 if ($article == null) {
     redirect();
 }
 
+// Removes the article on form submit
 if ($_POST) {
     removeArticle($id);
     redirect();

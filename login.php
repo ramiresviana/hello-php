@@ -4,10 +4,12 @@ require('functions.php');
 
 $error = null;
 
+// Checks authentication
 if (isLogged()) {
     redirect();
 }
 
+// Authenticate user credentials on form submit
 if ($_POST) {
     $username = $_POST['username'];
     $password = $_POST['password'];

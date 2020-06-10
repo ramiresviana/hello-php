@@ -2,12 +2,14 @@
 
 require('functions.php');
 
+// Checks authentication
 if (!isLogged()) {
     redirect('login.php');
 }
 
 $result = null;
 
+// Creates the article on form submit
 if ($_POST) {
     $title = $_POST['title'];
     $content = $_POST['content'];

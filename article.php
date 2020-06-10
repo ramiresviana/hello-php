@@ -2,6 +2,7 @@
 
 require('functions.php');
 
+// Checks get parameter
 if (!isset($_GET['id'])) {
     redirect();
 }
@@ -10,6 +11,7 @@ $id = $_GET['id'];
 
 $article = getArticle($id);
 
+// Checks for an valid article
 if ($article == null) {
     redirect();
 }

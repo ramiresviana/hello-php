@@ -2,10 +2,12 @@
 
 require('functions.php');
 
+// Checks authentication
 if (!isLogged()) {
     redirect('login.php');
 }
 
+// Logouts the user on form submit
 if ($_POST) {
     logout();
     redirect('login.php');
