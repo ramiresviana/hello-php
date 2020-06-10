@@ -2,13 +2,13 @@
 
 require('functions.php');
 
-$host = getHost();
-
 if (!isset($_GET['id'])) {
     redirect();
 }
 
-$article = getArticle($_GET['id']);
+$id = $_GET['id'];
+
+$article = getArticle($id);
 
 if ($article == null) {
     redirect();
@@ -38,8 +38,8 @@ if ($article == null) {
 
         <div class="admin-actions">
             <hr>
-            <a href="#"><button>Edit</button></a>
-            <a href="#"><button class="red">Remove</button></a>
+            <a href="/edit.php?id=<?= $id ?>"><button>Edit</button></a>
+            <a href="/remove.php?id=<?= $id ?>"><button class="red">Remove</button></a>
         </div>
     </main>
 </body>
