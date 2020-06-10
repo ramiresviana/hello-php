@@ -17,8 +17,10 @@ $article = getArticle($id);
 if ($article == null) {
     redirect();
 }
+
 if ($_POST) {
-    redirect('login.php');
+    removeArticle($id);
+    redirect();
 }
 
 ?>

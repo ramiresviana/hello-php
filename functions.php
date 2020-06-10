@@ -76,6 +76,41 @@ function createArticle($article) {
     return 'Article created';
 }
 
+function updateArticle($id, $newData) {
+    $title = $newData['title'];
+    $content = $newData['content'];
+    $image = $newData['image'];
+
+    $hasTitle = $title != '';
+    $hasContent = $content != '';
+    $hasImage = $image != null & !$image['error'];
+
+    $hasError = !($hasTitle && $hasContent);
+
+    if ($hasError) {
+        return 'An error ocurred';
+    }
+
+    $hasError = !uploadImage($image, $id);
+
+    if ($hasError) {
+        return 'An error ocurred';
+    }
+
+    $content = str_replace("\r\n", "<br>", $content);
+
+    updateLine('titles', $id, $title);
+    updateLine('contents', $id, $content);
+
+    return 'Article updated';
+}
+
+function removeArticle($id) {
+    removeLine('titles', $id);
+    removeLine('contents', $id);
+    removeLine('images', $id);
+}
+
 function countLines($filename) {
     $count = 0;
     $handle = fopen("data/$filename", "r");
@@ -157,6 +192,45 @@ function logout() {
 
 function isLogged() {
     return $_SESSION['logged'] == true;
+}
+
+function updateLine($filename, $line, $newData) {
+    $count = 1;
+    $handle = fopen("data/$filename", "r");
+
+    $tmp = "data/$filename-tmp";
+    $firstline = ($line == 1 && $newData == null) ? 2 : 1;
+
+    while(!feof($handle)) {
+        $data = trim(fgets($handle));
+
+        if ($count != $line) {
+            if ($count > $firstline) {
+                file_put_contents($tmp, PHP_EOL, FILE_APPEND);
+            }
+
+            file_put_contents($tmp, $data, FILE_APPEND);
+        } else {
+            if ($newData != null) {
+                if ($count > $firstline) {
+                    file_put_contents($tmp, PHP_EOL, FILE_APPEND);
+                }
+
+                file_put_contents($tmp, $newData, FILE_APPEND);
+            }
+        }
+
+        $count++;
+    }
+
+    fclose($handle);
+
+    unlink("data/$filename");
+    rename($tmp, "data/$filename");
+}
+
+function removeLine($filename, $line) {
+    updateLine($filename, $line, null);
 }
 
 session_start();

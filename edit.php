@@ -10,10 +10,28 @@ if (!isset($_GET['id'])) {
     redirect();
 }
 
-$article = getArticle($_GET['id']);
+$id = $_GET['id'];
+
+$article = getArticle($id);
 
 if ($article == null) {
     redirect();
+}
+
+$result = null;
+
+if ($_POST) {
+    $title = $_POST['title'];
+    $content = $_POST['content'];
+    $image = $_FILES['image'];
+
+    $newData = array(
+        'title' => $title,
+        'content' => $content,
+        'image' => $image
+    );
+
+    $result = updateArticle($id, $newData);
 }
 
 ?>

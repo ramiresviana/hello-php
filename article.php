@@ -36,11 +36,13 @@ if ($article == null) {
         <h2><?= $article['title'] ?></h2>
         <p><?= $article['content'] ?></p>
 
+<?php if (isLogged()) : ?>
         <div class="admin-actions">
             <hr>
             <a href="/edit.php?id=<?= $id ?>"><button>Edit</button></a>
             <a href="/remove.php?id=<?= $id ?>"><button class="red">Remove</button></a>
         </div>
+<?php endif ?>
     </main>
 </body>
 
