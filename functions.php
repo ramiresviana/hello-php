@@ -76,9 +76,15 @@ function createArticle($article) {
 
     $content = str_replace("\r\n", "<br>", $content);
 
-    file_put_contents('data/titles', PHP_EOL . $title, FILE_APPEND);
-    file_put_contents('data/contents', PHP_EOL . $content, FILE_APPEND);
-    file_put_contents('data/images', PHP_EOL . $imageFilename, FILE_APPEND);
+    $fileSeparator = PHP_EOL;
+
+    if (countArticles() == 0) {
+        $fileSeparator = '';
+    }
+
+    file_put_contents('data/titles', $fileSeparator . $title, FILE_APPEND);
+    file_put_contents('data/contents', $fileSeparator . $content, FILE_APPEND);
+    file_put_contents('data/images', $fileSeparator . $imageFilename, FILE_APPEND);
 
     return 'Article created';
 }
@@ -125,8 +131,16 @@ function removeArticle($id) {
 }
 
 function countLines($filename) {
+    if (!file_exists("data/$filename")) {
+        return false;
+    }
+
     $count = 0;
     $handle = fopen("data/$filename", "r");
+
+    if (!$handle) {
+        return false;
+    }
 
     while(!feof($handle)){
         $line = fgets($handle);
@@ -149,9 +163,17 @@ function getLine($filename, $line) {
 }
 
 function getLines($filename, $start, $end) {
+    if (!file_exists("data/$filename")) {
+        return false;
+    }
+
     $result = array();
     $count = 1;
     $handle = fopen("data/$filename", "r");
+
+    if (!$handle) {
+        return null;
+    }
 
     while($count <= $end && !feof($handle)) {
         $data = fgets($handle);
