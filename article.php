@@ -35,6 +35,12 @@ if ($article == null) {
         <img class="full-img" src="data/upload/<?= $article['image'] ?>">
         <h2><?= $article['title'] ?></h2>
         <p><?= $article['content'] ?></p>
+
+        <div class="admin-actions">
+            <hr>
+            <a href="#"><button>Edit</button></a>
+            <a href="#"><button class="red">Remove</button></a>
+        </div>
     </main>
 </body>
 
