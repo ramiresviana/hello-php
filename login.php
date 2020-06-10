@@ -15,6 +15,7 @@ if ($_POST) {
     $authenticated = authenticate($username, $password);
 
     if ($authenticated) {
+        login();
         redirect();
     } else {
         $error = 'Invalid credentials';
