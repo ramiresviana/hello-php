@@ -67,7 +67,8 @@ function createArticle($article) {
         return 'An error ocurred';
     }
 
-    $hasError = !uploadImage($image);
+    $imageFilename = uploadImage($image);
+    $hasError = $imageFilename == false;
 
     if ($hasError) {
         return 'An error ocurred';
@@ -77,6 +78,7 @@ function createArticle($article) {
 
     file_put_contents('data/titles', PHP_EOL . $title, FILE_APPEND);
     file_put_contents('data/contents', PHP_EOL . $content, FILE_APPEND);
+    file_put_contents('data/images', PHP_EOL . $imageFilename, FILE_APPEND);
 
     return 'Article created';
 }
@@ -96,7 +98,8 @@ function updateArticle($id, $newData) {
         return 'An error ocurred';
     }
 
-    $hasError = !uploadImage($image, $id);
+    $imageFilename = uploadImage($image, $id);
+    $hasError = $imageFilename == false;
 
     if ($hasError) {
         return 'An error ocurred';
@@ -104,13 +107,18 @@ function updateArticle($id, $newData) {
 
     $content = str_replace("\r\n", "<br>", $content);
 
+    removeImage($id);
+
     updateLine('titles', $id, $title);
     updateLine('contents', $id, $content);
+    updateLine('images', $id, $imageFilename);
 
     return 'Article updated';
 }
 
 function removeArticle($id) {
+    removeImage($id);
+
     removeLine('titles', $id);
     removeLine('contents', $id);
     removeLine('images', $id);
@@ -172,12 +180,19 @@ function uploadImage($image) {
         return false;
     }
 
-    $filename = countArticles() + 1 . ".$extension";
+    $filename = time() . ".$extension";
     $destination = 'data/upload/' . $filename;
 
-    file_put_contents('data/images', PHP_EOL . $filename, FILE_APPEND);
+    if (move_uploaded_file($image['tmp_name'], $destination)) {
+        return $filename;
+    } else {
+        return false;
+    }
+}
 
-    return move_uploaded_file($image['tmp_name'], $destination);
+function removeImage($id) {
+    $filename = trim(getLine('images', $id));
+    unlink("data/upload/$filename");
 }
 
 function redirect($path = '') {
